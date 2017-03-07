@@ -1,0 +1,111 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" controllerName="base.stats.controller.Detail">
+
+	<semantic:DetailPage id="page" navButtonPress="onNavBack" showNavButton="{device>/system/phone}" title="{i18n>detailTitle}" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+
+		<semantic:content>
+			<ObjectHeader id="objectHeader" title="{Home/teamname}({hmscore}) - {Away/teamname}({viscore})">
+				<attributes>
+					<ObjectAttribute text="{Season/name}"/>
+					<ObjectAttribute text="{location} - {path : 'gamedate', type:'sap.ui.model.odata.type.DateTime', formatOptions: {style: 'medium'}}"/>
+				</attributes>
+			</ObjectHeader>
+			<ObjectHeader id="playerName" title="{fname} {lname}" visible="false"/>
+			<ScrollContainer>
+			<Table id="lineItemsList" width="auto" items="{       path: 'Stats',       parameters: {        expand: 'Players,Games'}       }" updateFinished="onListUpdateFinished" noDataText="{i18n>detailLineItemTableNoDataText}" busyIndicatorDelay="{detailView>/lineItemTableDelay}" class="sapUiResponsiveMargin" itemPress="onListItemPress" updateStarted="">
+				<headerToolbar>
+					<Toolbar id="lineItemsToolbar">
+						<Title id="lineItemsHeader" text="{detailView>/lineItemListTitle}" press="onListItemPress"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column id="gameCol" width="60px">
+						<Text text="Game"/>
+					</Column>
+					<Column width="30px">
+						<Text text="AB"/>
+					</Column>
+					<Column width="30px">
+						<Text text="S"/>
+					</Column>
+					<Column width="30px">
+						<Text text="DB"/>
+					</Column>
+					<Column width="30px">
+						<Text text="TR"/>
+					</Column>
+					<Column width="30px">
+						<Text text="HR"/>
+					</Column>
+					<Column width="30px">
+						<Text text="H"/>
+					</Column>
+					<Column width="30px">
+						<Text text="R"/>
+					</Column>
+					<Column width="30px">
+						<Text text="RBI"/>
+					</Column>
+					<Column  width="30px" >
+						<Text text="W"/>
+					</Column>
+					<Column width="30px" >
+						<Text text="K"/>
+					</Column>
+					<Column width="30px" >
+						<Text text="HBP"/>
+					</Column>
+					<Column width="30px" >
+						<Text text="SAC"/>
+					</Column>
+					<Column width="30px">
+						<Text text="SB"/>
+					</Column>
+					<Column width="30px">
+						<Text text="AVG"/>
+					</Column>
+					<Column width="30px" >
+						<Text text="OBP"/>
+					</Column>
+					<Column width="40px" >
+						<Text text="SLG"/>
+					</Column>
+					<Column width="40px" >
+						<Text text="OPS"/>
+					</Column>		
+				</columns>
+				<items>
+					<ColumnListItem type="Active">
+						<cells>
+							<ObjectIdentifier text="{Players/fname}"/>
+							<ObjectNumber number="{AB}"/>
+							<ObjectNumber number="{S}"/>
+							<ObjectNumber number="{DB}"/>
+							<ObjectNumber number="{TR}"/>
+							<ObjectNumber number="{HR}"/>	
+							<ObjectNumber number="{H}"/>
+							<ObjectNumber number="{R}"/>
+							<ObjectNumber number="{RBI}"/>
+							<ObjectNumber number="{W}"/>
+							<ObjectNumber number="{K}"/>
+							<ObjectNumber number="{HBP}"/>
+							<ObjectNumber number="{SAC}"/>
+							<ObjectNumber number="{SB}"/>
+							<ObjectNumber number="{path: 'AVG', type:'sap.ui.model.odata.type.Double', formatOptions: {maxIntegerDigits: 0, decimals: 3}}"/>
+							<ObjectNumber number="{path: 'OBP', type:'sap.ui.model.odata.type.Double', formatOptions: {maxIntegerDigits: 0, decimals: 3}}"/>
+							<ObjectNumber number="{path: 'SLG', type:'sap.ui.model.odata.type.Double', formatOptions: {decimals: 3}}"/>
+							<ObjectNumber number="{path: 'OPS', type:'sap.ui.model.odata.type.Double', formatOptions: {decimals: 3}}"/>
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+			</ScrollContainer>
+		</semantic:content>
+
+		<semantic:customFooterContent>
+			<OverflowToolbarButton icon="sap-icon://competitor" text="Leaderboard" press="onLeader"/>
+			<OverflowToolbarButton icon="sap-icon://add" text="Leaderboard" press="onAdd"/>
+		</semantic:customFooterContent>
+
+	</semantic:DetailPage>
+
+</mvc:View>

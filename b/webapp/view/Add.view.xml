@@ -1,0 +1,94 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:sfm="sap.ui.comp.smartform" xmlns:sfd="sap.ui.comp.smartfield" xmlns:core="sap.ui.core" controllerName="base.stats.controller.Add">
+	<semantic:SemanticPage title="Add">
+		<semantic:content>
+			<Select change="onNewChange">
+				<core:Item key="n1" text="New Stat"/>
+				<core:Item key="n2" text="New Game"/>
+				<core:Item key="n3" text="New Player"/>
+				<core:Item key="n4" text="New Team"/>
+				<core:Item key="n5" text="New Season"/>
+			</Select>
+			<Panel headerText="New Season" id="n5" visible="false">
+				<VBox>
+					<Input placeholder="Season Name..." width="33%"/>
+					<Button text="Submit" id="s5" class="sapUiContentPadding" press="onSubmit"/>
+				</VBox>
+			</Panel>
+			<Panel headerText="New Team" id="n4" visible="false">
+				<VBox>
+					<Input placeholder="Team Name..." width="33%"/>
+					<Input placeholder="Team Alias..." width="33%"/>
+					<Button text="Submit" id="s4" class="sapUiContentPadding" press="onSubmit"/>
+				</VBox>
+			</Panel>
+			<Panel headerText="New Game" id="n2" visible="false">
+				<VBox>
+					<Label text="Season"/>
+					<Select items="{/Seasons}">
+						<core:Item key="{SID}" text="{name}"/>
+					</Select>
+					<Input placeholder="Division..." width="33%"/>
+					<Input placeholder="Field..." width="33%"/>
+					<Input placeholder="Game Number..." width="33%"/>
+					<DateTimePicker placeholder="Game Date/Time..." width="33%"/>
+					<Input placeholder="Location..." width="33%"/>
+					<Label text="Home Team"/>
+					<Select items="{/Teams}">
+						<items>
+							<core:Item key="{TEAMID}" text="{teamname}"/>
+						</items>
+					</Select>
+					<Input placeholder="Score..." width="33%"/>
+					<Label text="Away Team"/>
+					<Select items="{/Teams}">
+						<items>
+							<core:Item key="{TEAMID}" text="{teamname}"/>
+						</items>
+					</Select>
+					<Input placeholder="Score..." width="33%"/>
+					<TextArea placeholder="Coments..." rows="4"/>
+					<Button text="Submit" id="s2" class="sapUiContentPadding" press="onSubmit"/>
+				</VBox>
+			</Panel>
+			<Panel headerText="New Player" id="n3" visible="false">
+				<VBox>
+					<Input placeholder="First Name..." width="33%"/>
+					<Input placeholder="Last Name..." width="33%"/>
+					<Input placeholder="Email..." width="33%"/>
+					<Input placeholder="Phone Number..." width="33%"/>
+					<Button text="Submit" id="s3" class="sapUiContentPadding" press="onSubmit"/>
+				</VBox>
+			</Panel>
+			<Panel headerText="New Stat" id="n1">
+				<VBox>
+					<Label text="Game"/>
+					<Select items="{path: '/Games', parameters: {expand: 'Season'}}">
+						<items>
+							<core:Item key="{GAMEID}" text="{Season/name}: Game {gameno}"/>
+						</items>
+					</Select>
+					<Label text="Player"/>
+					<Select items="{/Players}">
+						<items>
+							<core:Item key="{PLAYERID}" text="{fname} {lname}"/>
+						</items>
+					</Select>
+					<Input placeholder="At Bats..." width="33%"/>
+					<Input placeholder="Singles..." width="33%"/>
+					<Input placeholder="Doubles..." width="33%"/>
+					<Input placeholder="Triples..." width="33%"/>
+					<Input placeholder="Home Runs..." width="33%"/>
+					<Input placeholder="Runs..." width="33%"/>
+					<Input placeholder="RBI's..." width="33%"/>
+					<Input placeholder="Walks..." width="33%"/>
+					<Input placeholder="Strikeouts..." width="33%"/>
+					<Input placeholder="Hit By Pitch..." width="33%"/>
+					<Input placeholder="Sacrifice Fly's..." width="33%"/>
+					<Input placeholder="Stolen Bases..." width="33%"/>
+					<Button text="Submit" id="s1" class="sapUiContentPadding" press="onSubmit"/>
+				</VBox>
+			</Panel>
+		</semantic:content>
+	</semantic:SemanticPage>
+	
+</mvc:View>

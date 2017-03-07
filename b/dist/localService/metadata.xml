@@ -1,0 +1,132 @@
+<edmx:Edmx
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" Version="1.0">
+    <edmx:DataServices
+        xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="2.0">
+        <Schema
+            xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+            xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+            xmlns="http://schemas.microsoft.com/ado/2008/09/edm" Namespace="stats">
+            <EntityType Name="GamesType">
+                <Key>
+                    <PropertyRef Name="GAMEID"/>
+                </Key>
+                <Property Name="GAMEID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="season" Type="Edm.String" MaxLength="40"/>
+                <Property Name="division" Type="Edm.String" MaxLength="40"/>
+                <Property Name="field" Type="Edm.String" MaxLength="40"/>
+                <Property Name="gameno" Type="Edm.Int32"/>
+                <Property Name="gamedate" Type="Edm.DateTime"/>
+                <Property Name="gametime" Type="Edm.String" MaxLength="10"/>
+                <Property Name="location" Type="Edm.String" MaxLength="40"/>
+                <Property Name="viscore" Type="Edm.Int32"/>
+                <Property Name="hmscore" Type="Edm.Int32"/>
+                <Property Name="comments" Type="Edm.String" MaxLength="255"/>
+                <Property Name="HMTID" Type="Edm.String" MaxLength="10"/>
+                <Property Name="VSTID" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="Stats" Relationship="stats.GameStatsType" FromRole="GamesPrincipal" ToRole="StatsDependent"/>
+                <NavigationProperty Name="Home" Relationship="stats.hTeamGamesType" FromRole="GamesDependent" ToRole="TeamsPrincipal"/>
+                <NavigationProperty Name="Away" Relationship="stats.vTeamGamesType" FromRole="GamesDependent" ToRole="TeamsPrincipal"/>
+            </EntityType>
+            <EntityType Name="PlayersType">
+                <Key>
+                    <PropertyRef Name="PLAYERID"/>
+                </Key>
+                <Property Name="PLAYERID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="fname" Type="Edm.String" MaxLength="40"/>
+                <Property Name="lname" Type="Edm.String" MaxLength="40"/>
+                <Property Name="email" Type="Edm.String" MaxLength="40"/>
+                <Property Name="phone" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="Stats" Relationship="stats.PlayerStatsType" FromRole="PlayersPrincipal" ToRole="StatsDependent"/>
+            </EntityType>
+            <EntityType Name="TeamsType">
+                <Key>
+                    <PropertyRef Name="TEAMID"/>
+                </Key>
+                <Property Name="TEAMID" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="teamalias" Type="Edm.String" MaxLength="10"/>
+                <Property Name="teamname" Type="Edm.String" MaxLength="40"/>
+                <NavigationProperty Name="Games" Relationship="stats.hTeamGamesType" FromRole="TeamsPrincipal" ToRole="GamesDependent"/>
+            </EntityType>
+            <EntityType Name="StatsType">
+                <Key>
+                    <PropertyRef Name="SID"/>
+                </Key>
+                <Property Name="GID" Type="Edm.String" MaxLength="20"/>
+                <Property Name="SID" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="PID" Type="Edm.String" MaxLength="20"/>
+                <Property Name="AB" Type="Edm.Int32"/>
+                <Property Name="S" Type="Edm.Int32"/>
+                <Property Name="DB" Type="Edm.Int32"/>
+                <Property Name="TR" Type="Edm.Int32"/>
+                <Property Name="HR" Type="Edm.Int32"/>
+                <Property Name="H" Type="Edm.Int32"/>
+                <Property Name="R" Type="Edm.Int32"/>
+                <Property Name="RBI" Type="Edm.Int32"/>
+                <Property Name="W" Type="Edm.Int32"/>
+                <Property Name="K" Type="Edm.Int32"/>
+                <Property Name="HBP" Type="Edm.Int32"/>
+                <Property Name="SAC" Type="Edm.Int32"/>
+                <Property Name="SB" Type="Edm.Int32"/>
+                <Property Name="AVG" Type="Edm.Double"/>
+                <Property Name="OBP" Type="Edm.Double"/>
+                <Property Name="SLG" Type="Edm.Double"/>
+                <Property Name="OPS" Type="Edm.Double"/>
+                <NavigationProperty Name="Players" Relationship="stats.PlayerStatsType" FromRole="StatsDependent" ToRole="PlayersPrincipal"/>
+            </EntityType>
+            <EntityType Name="EventsType">
+                <Key>
+                    <PropertyRef Name="eid"/>
+                </Key>
+                <Property Name="eid" Type="Edm.Int32" Nullable="false"/>
+                <Property Name="creator.uid" Type="Edm.Int32"/>
+                <Property Name="bDate" Type="Edm.DateTime"/>
+                <Property Name="eDate" Type="Edm.DateTime"/>
+                <Property Name="eName" Type="Edm.String" MaxLength="40"/>
+                <Property Name="eSum" Type="Edm.String" MaxLength="255"/>
+                <Property Name="eDesc" Type="Edm.String" MaxLength="2147483647"/>
+                <Property Name="price" Type="Edm.Int32"/>
+                <Property Name="link" Type="Edm.String" MaxLength="255"/>
+                <Property Name="venue.vid" Type="Edm.Int32"/>
+            </EntityType>
+            <Association Name="GameStatsType">
+                <End Type="stats.GamesType" Role="GamesPrincipal" Multiplicity="1"/>
+                <End Type="stats.StatsType" Role="StatsDependent" Multiplicity="*"/>
+            </Association>
+            <Association Name="PlayerStatsType">
+                <End Type="stats.PlayersType" Role="PlayersPrincipal" Multiplicity="1"/>
+                <End Type="stats.StatsType" Role="StatsDependent" Multiplicity="*"/>
+            </Association>
+            <Association Name="hTeamGamesType">
+                <End Type="stats.TeamsType" Role="TeamsPrincipal" Multiplicity="1"/>
+                <End Type="stats.GamesType" Role="GamesDependent" Multiplicity="*"/>
+            </Association>
+            <Association Name="vTeamGamesType">
+                <End Type="stats.TeamsType" Role="TeamsPrincipal" Multiplicity="1"/>
+                <End Type="stats.GamesType" Role="GamesDependent" Multiplicity="*"/>
+            </Association>
+            <EntityContainer Name="services" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Games" EntityType="stats.GamesType"/>
+                <EntitySet Name="Players" EntityType="stats.PlayersType"/>
+                <EntitySet Name="Teams" EntityType="stats.TeamsType"/>
+                <EntitySet Name="Stats" EntityType="stats.StatsType"/>
+                <EntitySet Name="Events" EntityType="stats.EventsType"/>
+                <AssociationSet Name="GameStats" Association="stats.GameStatsType">
+                    <End Role="GamesPrincipal" EntitySet="Games"/>
+                    <End Role="StatsDependent" EntitySet="Stats"/>
+                </AssociationSet>
+                <AssociationSet Name="PlayerStats" Association="stats.PlayerStatsType">
+                    <End Role="PlayersPrincipal" EntitySet="Players"/>
+                    <End Role="StatsDependent" EntitySet="Stats"/>
+                </AssociationSet>
+                <AssociationSet Name="hTeamGames" Association="stats.hTeamGamesType">
+                    <End Role="TeamsPrincipal" EntitySet="Teams"/>
+                    <End Role="GamesDependent" EntitySet="Games"/>
+                </AssociationSet>
+                <AssociationSet Name="vTeamGames" Association="stats.vTeamGamesType">
+                    <End Role="TeamsPrincipal" EntitySet="Teams"/>
+                    <End Role="GamesDependent" EntitySet="Games"/>
+                </AssociationSet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

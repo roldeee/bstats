@@ -1,0 +1,36 @@
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:core="sap.ui.core" controllerName="base.stats.controller.Leader">
+	<semantic:SemanticPage title="Leaders">
+		<semantic:content>
+			<ObjectHeader title="Leaderboard"/>
+			<Text text="Season" class = "sapUiResponsiveMargin"/>
+			<Select id="selSeason" items="{/Seasons}" class = "sapUiResponsiveMargin" change="onLeaderChange">
+				<items>
+					<core:Item key="{SID}" text="{name}"/>
+				</items>
+			</Select>
+			<Text text="Stat" class = "sapUiResponsiveMargin"/>
+			<Select id="selStat" class = "sapUiResponsiveMargin" change="onLeaderChange"></Select>
+			<List items="{
+					path: '/AllTime',
+					parameters: {
+						expand : 'Player'
+						},
+					sorter : {
+						path : 'AVG',
+						descending : true
+						}
+					}"
+				width="auto"
+				class = "sapUiResponsiveMargin"
+				growing="true"
+				growingThreshold="5"
+				updateFinished="onListUpdateFinished" 
+				id="leaders">
+					<items>
+						<ObjectListItem title="{Player/fname}" number="{AVG}"/>
+					</items>
+				</List>
+		</semantic:content>
+	</semantic:SemanticPage>
+	
+</mvc:View>
